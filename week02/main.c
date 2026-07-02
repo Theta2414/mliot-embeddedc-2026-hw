@@ -9,10 +9,10 @@ typedef union {
     uint16_t raw_value;
     struct {
         // HỌC VIÊN BẮT ĐẦU VIẾT CODE TỪ ĐÂY
-
-
-
-
+        uint16_t PWR_ON : 1;
+        uint16_t ASSIST_LEVEL : 2;
+        uint16_t LIGHT_BRIGHT : 4;
+        uint16_t RESERVED : 9;
         // HỌC VIÊN KẾT THÚC VIẾT CODE
     } fields;
 } Bike_Status_t;
@@ -32,8 +32,7 @@ void drive_sport(void) {
 
 // HỌC VIÊN BẮT ĐẦU VIẾT CODE TỪ ĐÂY
 
-
-
+void (*drive_modes[3])(void) = {drive_eco, drive_normal, drive_sport};
 
 // HỌC VIÊN KẾT THÚC VIẾT CODE
 
@@ -44,10 +43,9 @@ void Battery_Monitor(void (*overheat_cb)(void)) {
     int battery_temp = 45; 
     
     // HỌC VIÊN BẮT ĐẦU VIẾT CODE TỪ ĐÂY
-
-
-
-
+    if (overheat_cb == NULL) return;
+    if (battery_temp > 40) overheat_cb();
+    return;
     // HỌC VIÊN KẾT THÚC VIẾT CODE
 }
 
@@ -63,10 +61,8 @@ uint32_t total_odometer = 0;
 
 void crash_simulation(void) {
     // HỌC VIÊN BẮT ĐẦU VIẾT CODE TỪ ĐÂY
-
-
-
-
+    printf("Stack overflow test\n");
+    crash_simulation();
     // HỌC VIÊN KẾT THÚC VIẾT CODE
 }
 
@@ -86,8 +82,7 @@ int main() {
     printf("ENGINE CONTROLLING: \n");
     // HỌC VIÊN BẮT ĐẦU VIẾT CODE TỪ ĐÂY
 
-
-
+    if (my_bike.fields.ASSIST_LEVEL < 3) drive_modes[my_bike.fields.ASSIST_LEVEL]();
 
     // HỌC VIÊN KẾT THÚC VIẾT CODE
 
@@ -103,7 +98,7 @@ int main() {
     printf("current_speed (RAM/Stack):  %p\n", (void*)&current_speed);
 
     // Bỏ comment dòng dưới để chạy thử bài Crash Lab
-    // crash_simulation();
+    crash_simulation();
 
     return 0;
 }

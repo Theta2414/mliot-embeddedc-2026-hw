@@ -1,0 +1,12 @@
+Task 4.2
+MEMORY ADDRESSES OF VARIABLES 
+BIKE_MODEL (ROM/.rodata):   00007FF64FA150B0
+total_odometer (RAM/.bss):  00007FF64FA1A0A0
+current_speed (RAM/Stack):  000000A0843FF878
+
+Task 4.3
+Trên máy tính: Chương trình in ra dòng "Stack overflow test" vô hạn rồi dừng với lỗi Segmentation fault
+Trong kiến trúc ARM Cortex-M: In ra lỗi HardFault_Handler
+
+Task 5
+Chọn cách 1, vì lúc này toàn mảng đều chứa phần tử 0, trình biên dịch ghi chú lại để chừa ra 40 KB trên RAM và cấp phát tự động khi cấp nguồn theo cơ chế của vi điều khiển mà không ghi vào flash. Cách 2 do quá trình tạo mảng chứa các giá trị 1, 2, 3, có thể bị mất dữ liệu trên RAM khi tắt nguồn, buộc copy toàn bộ mảng vào flash. 
