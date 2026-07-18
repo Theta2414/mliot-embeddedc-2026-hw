@@ -1,0 +1,44 @@
+Task 1
+1.1
+CMake: Tạo và quản lý hệ thống build. CMake đọc file cấu hình CMakeLists.txt rồi sinh ra file build cho Ninja
+
+Ninja: Thực hiện quá trình build dự án. Ninja đọc các file do CMake tạo ra và gọi Compiler để biên dịch, liên kết chương trình
+
+Compiler: Biên dịch mã nguồn C thành mã máy dành cho vi điều khiển STM32 và liên kết các file đối tượng để tạo ra file thực thi .bin
+
+STM32_Programmer_CLI: Nạp (flash) chương trình đã biên dịch vào bộ nhớ Flash của vi điều khiển STM32 để chương trình có thể chạy trên phần cứng
+
+1.2
+1. Viết chương trình C
+2. Chạy Cmake CMakeLists.txt và tạo các file build cho Ninja
+3. Ninja đọc các file build do CMake tạo và gọi arm-none-eabi-gcc để biên dịch file .c thành .o, liên kết các đối tượng thành file thực thi và sinh ra file .bin
+4. STM32_Programmer_CLI sử dụng file .bin vừa tạo để nạp chương trình vào bộ nhớ Flash của vi điều khiển STM32
+5. STM32 khởi động và thực thi chương trình
+
+Task 2
+2.1
+Sau khi biên dịch, mỗi file nguồn .c sẽ tạo ra một file đối tượng .o. Tuy nhiên, các file .o chỉ chứa mã máy của từng phần chương trình riêng lẻ và vẫn còn các tham chiếu đến các hàm hoặc biến nằm trong những file khác. Vì thế, chúng chưa phải là một chương trình hoàn chỉnh và không thể nạp xuống chip được
+Linker giúp ghép lại thành một chương trình hoàn chỉnh, xử lí các tham chiếu, sắp xếp các đoạn mã và tạo file thực thi
+
+2.2
+Incremental Build của Ninja giúp chỉ biên dịch lại những file đã thay đổi và sau đó liên kết lại chương trình. Nhờ đó, thời gian build được rút ngắn đáng kể, giúp lập trình viên làm việc hiệu quả hơn.
+
+Cơ chế hoạt động:
+1. Ninja theo dõi timestamp của các file nguồn và các file phụ thuộc
+Khi một file .c được chỉnh sửa, timestamp của file đó sẽ mới hơn file .o tương ứng.
+Ninja phát hiện sự thay đổi này và chỉ gọi Compiler để biên dịch lại đúng file .c đó thành file .o mới
+Cuối cùng, Ninja gọi Linker để tạo lại file thực thi (.elf, .bin, .hex) từ các file .o hiện có
+
+Task 3
+3.1
+Vì Flash là bộ nhớ không mất dữ liệu khi mất nguồn, nên các giá trị khởi tạo của biến phải được lưu ở Flash để tồn tại sau mỗi lần tắt máy. Tuy nhiên, khi chương trình chạy, các biến trong .data có thể bị thay đổi nên chúng phải nằm trong RAM, nơi CPU có thể đọc và ghi dữ liệu nhanh chóng
+
+3.2
+Các biến toàn cục có giá trị khởi tạo sẽ không nhận được giá trị ban đầu như đã khai báo trong chương trình
+
+Task 4
+4.1
+cmake -B build -G Ninja
+
+4.2
+cmake --build build
