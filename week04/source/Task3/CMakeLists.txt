@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+#set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/STM32F103C8_FLASH.ld)
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -56,12 +57,15 @@ set(BAREMETAL_Application_Src
 )
 
 # Add sources to executable
-   target_sources(${PROJECT_NAME} PRIVATE
-       main.c
-       stm32f1xx_hal.c
-       stm32f1xx_hal_gpio.c
-       # Thêm các file nguồn khác của bạn tại đây
-   )
+target_sources(${PROJECT_NAME} PRIVATE
+    main.c
+    stm32f1xx_hal.c
+    stm32f1xx_hal_gpio.c
+    stm32f1xx_hal_rcc.c       # Bổ sung file này
+    stm32f1xx_hal_cortex.c    # Bổ sung file này
+    system_stm32f1xx.c        # Bổ sung file này để Linker tìm thấy SystemInit()
+    startup_stm32f103xb.S
+)
 
 # Add include paths
 target_include_directories(${PROJECT_NAME} PRIVATE .)

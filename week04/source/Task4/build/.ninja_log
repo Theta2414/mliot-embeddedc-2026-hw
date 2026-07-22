@@ -1,0 +1,9 @@
+# ninja log v6
+135	253	8064432990908146	CMakeFiles/stm32f103_aht20_baremetal.dir/startup_stm32f103xb.s.obj	4ba507114fb41998
+114	347	8064432990698181	CMakeFiles/stm32f103_aht20_baremetal.dir/system_stm32f1xx.c.obj	64547502da9b8112
+36	352	8064432989905949	CMakeFiles/stm32f103_aht20_baremetal.dir/stm32f1xx_hal.c.obj	a5c7ed96122c3c9a
+55	370	8064432990105944	CMakeFiles/stm32f103_aht20_baremetal.dir/stm32f1xx_hal_gpio.c.obj	cc3a48ce8c0ec660
+19	384	8064432989735276	CMakeFiles/stm32f103_aht20_baremetal.dir/main.c.obj	e43492f2596ff7e8
+74	411	8064432990289891	CMakeFiles/stm32f103_aht20_baremetal.dir/stm32f1xx_hal_rcc.c.obj	4324c9fad987811d
+94	432	8064432990494464	CMakeFiles/stm32f103_aht20_baremetal.dir/stm32f1xx_hal_cortex.c.obj	5bf593678ad2afa1
+435	758	8064432993891227	stm32f103_aht20_baremetal.elf	f6c5b8d52f0dac77
