@@ -1,0 +1,23 @@
+PHẦN 1: CÂU HỎI TỰ LUẬN MỞ
+
+Task 1 (Kiến trúc Phần cứng): Bản chất các chế độ GPIO
+
+1.1 
+Cặp transistor gồm PMOS (nằm phía trên, nối với nguồn VDD 3.3V) và NMOS (nằm phía dưới, nối với đất VSS 0V) hoạt động phối hợp để kéo hoặc đẩy điện áp ra chân pad
+Khi cấu hình chân ở mức logic 1 (3.3 V): PMOS không dẫn (OFF), NMOS dẫn (ON), đầu ra nối với nguồn, ngắt với đất
+Khi cấu hình chân ở mức logic 0 (0 V): PMOS dẫn (ON), NMOS không dẫn (OFF), đầu ra nối với đất, ngắt với nguồn
+
+1.2
+Chế độ Input Pull-up thường được sử dụng trong các trường hợp sau:
+Giao tiếp với nút nhấn hoặc công tắc (Cấu hình Active-Low)
+Giao tiếp với các thiết bị có ngõ ra Open-Drain (Cực máng hở)
+
+Hiện tượng khi chân Input bị bỏ lửng (Floating):
+Giá trị thanh ghi dao động ngẫu nhiên (Nhiễu loạn)
+Nguy cơ phát sinh dòng xuyên tâm (Shoot-through current) gây tốn năng lượng
+
+Task 2
+
+Nếu hệ thống cấp Clock cho tất cả các ngoại vi ngay khi vừa cấp nguồn, hàng triệu transistor bên trong các khối không sử dụng sẽ liên tục đóng/ngắt theo tần số của Clock (ví dụ 72MHz hay 168MHz). Việc này sinh ra lượng công suất động khổng lồ và lãng phí, gây hao pin và làm nóng chip.
+
+Bằng cách sử dụng Clock Gating để ngắt mặc định toàn bộ ngoại vi từ hệ thống bus, vi điều khiển đảm bảo tiêu thụ dòng điện ở mức tối thiểu nhất khi khởi động. Lập trình viên cần dùng khối nào thì chỉ cấp Clock cho khối đó.
